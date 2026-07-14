@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --pine: #123524;
+    --pine-deep: #0b2419;
+    --brass: #b8860a;
+    --brass-light: #d9a940;
+    --parchment: #f6f1e4;
+    --parchment-dark: #ece4d0;
+    --ink: #1a1a1a;
+    --muted: #6b6459;
+    --line: #d8cfb8;
+    --danger: #a3392c;
+    --success: #2c6e49;
+    --radius: 4px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--pine);
+    margin: 0;
+}
+
+.mono { font-family: 'IBM Plex Mono', monospace; }
+
+a { color: var(--pine); }
+
+/* ---------------- Top bar ---------------- */
+.topbar {
+    background: var(--pine);
+    color: var(--parchment);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--brass);
+}
+
+.topbar .brand {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar .brand .mark {
+    width: 30px; height: 30px;
+    border: 2px solid var(--brass-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    color: var(--brass-light);
+}
+
+.topbar nav a, .topbar button.link {
+    color: var(--parchment);
+    text-decoration: none;
+    font-size: 0.92rem;
+    margin-left: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    opacity: 0.85;
+}
+.topbar nav a:hover, .topbar button.link:hover { opacity: 1; text-decoration: underline; }
+
+/* ---------------- Layout wrappers ---------------- */
+.page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+.center-page {
+    min-height: calc(100vh - 74px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* ---------------- Ledger card (signature element) ---------------- */
+.ledger-card {
+    background: #fffdf8;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 0 var(--line), 0 8px 24px rgba(18, 53, 36, 0.06);
+    position: relative;
+    padding: 36px 38px;
+}
+
+.ledger-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--brass) 0 10px, transparent 10px 20px);
+    opacity: 0.55;
+}
+
+.ledger-card.narrow { max-width: 440px; width: 100%; }
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    color: var(--brass);
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* ---------------- Forms ---------------- */
+.field { margin-bottom: 18px; }
+.field label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.field input, .field select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    font-size: 0.96rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+}
+.field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--pine);
+    box-shadow: 0 0 0 3px rgba(18, 53, 36, 0.1);
+}
+.field-row { display: flex; gap: 14px; }
+.field-row .field { flex: 1; }
+
+button.btn {
+    width: 100%;
+    padding: 12px 18px;
+    background: var(--pine);
+    color: var(--parchment);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.96rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.01em;
+}
+button.btn:hover { background: var(--pine-deep); }
+button.btn.secondary {
+    background: transparent;
+    color: var(--pine);
+    border: 1px solid var(--pine);
+}
+button.btn.secondary:hover { background: rgba(18,53,36,0.06); }
+button.btn.danger { background: var(--danger); }
+button.btn.danger:hover { background: #832a20; }
+button.btn.small { width: auto; padding: 8px 14px; font-size: 0.85rem; }
+
+.form-footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+/* ---------------- Alerts ---------------- */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+    display: none;
+}
+.alert.show { display: block; }
+.alert.error { background: #fbe9e7; color: var(--danger); border: 1px solid #e8c4bd; }
+.alert.success { background: #e6f0e9; color: var(--success); border: 1px solid #bfdccb; }
+
+/* ---------------- Dashboard grid ---------------- */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.balance-strip {
+    background: var(--pine);
+    color: var(--parchment);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.balance-strip::after {
+    content: "";
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 160px; height: 160px;
+    border: 1px solid rgba(217,169,64,0.3);
+    border-radius: 50%;
+}
+.balance-strip .label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; }
+.balance-strip .amount { font-family: 'IBM Plex Mono', monospace; font-size: 2.3rem; font-weight: 600; color: var(--brass-light); }
+.balance-strip .acc-meta { font-size: 0.88rem; opacity: 0.85; }
+.status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+.status-pill.active { background: rgba(44,110,73,0.2); color: #a9d9bb; }
+.status-pill.frozen { background: rgba(163,57,44,0.25); color: #f3b8ac; }
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.action-card {
+    background: #fffdf8;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.action-card:hover { box-shadow: 0 6px 18px rgba(18,53,36,0.1); transform: translateY(-1px); }
+.action-card .icon { font-size: 1.4rem; color: var(--brass); margin-bottom: 8px; }
+.action-card h3 { font-size: 1rem; margin-bottom: 4px; }
+.action-card p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+
+/* ---------------- Tables (ledger-style) ---------------- */
+table.ledger {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+table.ledger th {
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--pine);
+}
+table.ledger td {
+    padding: 12px;
+    border-bottom: 1px dashed var(--line);
+}
+table.ledger td.amount, table.ledger th.amount { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+table.ledger tr:last-child td { border-bottom: none; }
+.txn-type { font-weight: 500; }
+.txn-type.credit { color: var(--success); }
+.txn-type.debit { color: var(--danger); }
+
+/* ---------------- Modal ---------------- */
+.modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(11, 36, 25, 0.55);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+    background: var(--parchment);
+    border-radius: var(--radius);
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+}
+.modal-box .close-x {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted);
+}
+
+/* ---------------- Stat cards (admin) ---------------- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: #fffdf8;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--brass);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+}
+.stat-card .num { font-family: 'IBM Plex Mono', monospace; font-size: 1.7rem; font-weight: 600; color: var(--pine); }
+.stat-card .lbl { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 14px;
+}
+.section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 20px;
+    font-size: 0.9rem;
+}
+
+.hero-copy { max-width: 460px; }
+.hero-copy .eyebrow { margin-bottom: 10px; }
+.hero-copy h1 { font-size: 2.1rem; line-height: 1.15; margin-bottom: 14px; }
+.hero-copy p { color: var(--muted); font-size: 0.98rem; line-height: 1.6; }
+
+.split {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tag-row { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.tag {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--muted);
+}
+
+.search-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.search-row input { flex: 1; }
+.search-row button { width: auto; padding: 11px 20px; }
+
+@media (max-width: 640px) {
+    .topbar { padding: 14px 18px; }
+    .topbar nav a, .topbar button.link { margin-left: 12px; font-size: 0.85rem; }
+    .ledger-card { padding: 24px 20px; }
+    .balance-strip .amount { font-size: 1.7rem; }
+}

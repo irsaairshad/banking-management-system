@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel &mdash; Meridian Trust</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="brand"><span class="mark">M</span> Meridian Trust <span style="opacity:0.6; font-size:0.9rem; font-family:'Inter',sans-serif;">/ Admin</span></div>
+    <nav>
+        <a href="index.html">Customer sign in</a>
+        <button class="link" id="logoutBtn" style="display:none;">Sign out</button>
+    </nav>
+</div>
+
+<!-- Admin Login -->
+<div class="center-page" id="loginSection">
+    <div class="ledger-card narrow">
+        <span class="eyebrow">Restricted access</span>
+        <h2 style="margin-bottom: 22px;">Admin sign in</h2>
+        <div class="alert" id="adminLoginAlert"></div>
+        <form id="adminLoginForm">
+            <div class="field">
+                <label for="adminUsername">Username</label>
+                <input type="text" id="adminUsername" required>
+            </div>
+            <div class="field">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" required>
+            </div>
+            <button type="submit" class="btn">Sign in</button>
+        </form>
+    </div>
+</div>
+
+<!-- Admin Dashboard -->
+<div class="page" id="dashSection" style="display:none;">
+
+    <div class="stat-grid">
+        <div class="stat-card"><div class="num" id="statTotal">--</div><div class="lbl">Total accounts</div></div>
+        <div class="stat-card"><div class="num" id="statActive">--</div><div class="lbl">Active</div></div>
+        <div class="stat-card"><div class="num" id="statFrozen">--</div><div class="lbl">Frozen</div></div>
+        <div class="stat-card"><div class="num mono" id="statFunds">--</div><div class="lbl">Total funds held</div></div>
+    </div>
+
+    <div class="search-row">
+        <input type="text" id="searchAccNo" placeholder="Search by account number...">
+        <button class="btn secondary small" id="searchBtn">Search</button>
+        <button class="btn small" id="refreshBtn" style="width:auto;">Refresh</button>
+    </div>
+
+    <div class="ledger-card" style="padding: 10px 24px;">
+        <table class="ledger" id="accountsTable">
+            <thead>
+                <tr>
+                    <th>Acc. No</th><th>Name</th><th>Phone</th><th>Type</th>
+                    <th class="amount">Balance</th><th>Status</th><th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="accountsBody"></tbody>
+        </table>
+        <div class="empty-state" id="accountsEmpty" style="display:none;">No accounts found.</div>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

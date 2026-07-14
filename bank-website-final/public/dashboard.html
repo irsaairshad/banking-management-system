@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard &mdash; Meridian Trust</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="brand"><span class="mark">M</span> Meridian Trust</div>
+    <nav>
+        <span id="userName" style="margin-right: 8px; opacity: 0.85;"></span>
+        <button class="link" id="logoutBtn">Sign out</button>
+    </nav>
+</div>
+
+<div class="page">
+
+    <div class="balance-strip">
+        <div>
+            <span class="label">Available balance</span>
+            <div class="amount mono" id="balanceAmount">--</div>
+        </div>
+        <div class="acc-meta">
+            <div>Account No. <span class="mono" id="accNoDisplay">--</span></div>
+            <div id="accTypeDisplay" style="margin: 4px 0;"></div>
+            <span class="status-pill" id="statusPill">--</span>
+        </div>
+    </div>
+
+    <div class="action-grid">
+        <div class="action-card" data-modal="depositModal">
+            <div class="icon">&#8595;</div>
+            <h3>Deposit</h3>
+            <p>Add money to your account</p>
+        </div>
+        <div class="action-card" data-modal="withdrawModal">
+            <div class="icon">&#8593;</div>
+            <h3>Withdraw</h3>
+            <p>Take money out</p>
+        </div>
+        <div class="action-card" data-modal="transferModal">
+            <div class="icon">&#8646;</div>
+            <h3>Transfer</h3>
+            <p>Send money to another account</p>
+        </div>
+        <div class="action-card" data-modal="detailsModal">
+            <div class="icon">&#9998;</div>
+            <h3>Account details</h3>
+            <p>View or update your information</p>
+        </div>
+        <div class="action-card" data-modal="closeModal">
+            <div class="icon">&#10005;</div>
+            <h3>Close account</h3>
+            <p>Permanently close this account</p>
+        </div>
+    </div>
+
+    <div class="section-title"><h3>Recent activity</h3></div>
+    <div class="ledger-card" style="padding: 10px 24px;">
+        <table class="ledger" id="txnTable">
+            <thead>
+                <tr><th>Date</th><th>Type</th><th>Note</th><th class="amount">Amount</th><th class="amount">Balance after</th></tr>
+            </thead>
+            <tbody id="txnBody"></tbody>
+        </table>
+        <div class="empty-state" id="txnEmpty" style="display:none;">No transactions yet. Make your first deposit to get started.</div>
+    </div>
+</div>
+
+<!-- Deposit Modal -->
+<div class="modal-overlay" id="depositModal">
+    <div class="modal-box">
+        <button class="close-x" data-close>&times;</button>
+        <h2 style="margin-bottom: 18px;">Deposit money</h2>
+        <div class="alert" id="depositAlert"></div>
+        <form id="depositForm">
+            <div class="field">
+                <label for="depositAmount">Amount</label>
+                <input type="number" id="depositAmount" min="1" step="0.01" required>
+            </div>
+            <button type="submit" class="btn">Confirm deposit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Withdraw Modal -->
+<div class="modal-overlay" id="withdrawModal">
+    <div class="modal-box">
+        <button class="close-x" data-close>&times;</button>
+        <h2 style="margin-bottom: 18px;">Withdraw money</h2>
+        <div class="alert" id="withdrawAlert"></div>
+        <form id="withdrawForm">
+            <div class="field">
+                <label for="withdrawAmount">Amount</label>
+                <input type="number" id="withdrawAmount" min="1" step="0.01" required>
+            </div>
+            <button type="submit" class="btn">Confirm withdrawal</button>
+        </form>
+    </div>
+</div>
+
+<!-- Transfer Modal -->
+<div class="modal-overlay" id="transferModal">
+    <div class="modal-box">
+        <button class="close-x" data-close>&times;</button>
+        <h2 style="margin-bottom: 18px;">Transfer money</h2>
+        <div class="alert" id="transferAlert"></div>
+        <form id="transferForm">
+            <div class="field">
+                <label for="toAccountNo">Recipient account number</label>
+                <input type="text" id="toAccountNo" required>
+            </div>
+            <div class="field">
+                <label for="transferAmount">Amount</label>
+                <input type="number" id="transferAmount" min="1" step="0.01" required>
+            </div>
+            <button type="submit" class="btn">Send transfer</button>
+        </form>
+    </div>
+</div>
+
+<!-- Details / Update Modal -->
+<div class="modal-overlay" id="detailsModal">
+    <div class="modal-box">
+        <button class="close-x" data-close>&times;</button>
+        <h2 style="margin-bottom: 18px;">Account details</h2>
+        <div class="alert" id="detailsAlert"></div>
+        <form id="detailsForm">
+            <div class="field">
+                <label>Full name</label>
+                <input type="text" id="detailName" disabled>
+            </div>
+            <div class="field">
+                <label for="detailPhone">Phone number</label>
+                <input type="text" id="detailPhone" pattern="\d{7,15}">
+            </div>
+            <div class="field">
+                <label for="detailAddress">Address</label>
+                <input type="text" id="detailAddress">
+            </div>
+            <div class="field">
+                <label for="detailNewPin">New PIN (leave blank to keep current)</label>
+                <input type="password" id="detailNewPin" maxlength="4" pattern="\d{4}">
+            </div>
+            <button type="submit" class="btn">Save changes</button>
+        </form>
+    </div>
+</div>
+
+<!-- Close Account Modal -->
+<div class="modal-overlay" id="closeModal">
+    <div class="modal-box">
+        <button class="close-x" data-close>&times;</button>
+        <h2 style="margin-bottom: 12px;">Close account</h2>
+        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 18px;">
+            Your balance must be zero before closing. This action cannot be undone.
+        </p>
+        <div class="alert" id="closeAlert"></div>
+        <button class="btn danger" id="confirmCloseBtn">Yes, permanently close my account</button>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

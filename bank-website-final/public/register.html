@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open an Account &mdash; Meridian Trust</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="brand"><span class="mark">M</span> Meridian Trust</div>
+    <nav>
+        <a href="index.html">Sign in</a>
+    </nav>
+</div>
+
+<div class="page">
+    <div style="max-width: 560px; margin: 0 auto;">
+        <div class="ledger-card">
+            <span class="eyebrow">New account</span>
+            <h2 style="margin-bottom: 22px;">Open your account</h2>
+
+            <div class="alert" id="regAlert"></div>
+
+            <div id="successBox" style="display:none; text-align:center; padding: 20px 0;">
+                <span class="eyebrow">Account created</span>
+                <h2 style="margin: 10px 0;">Welcome aboard.</h2>
+                <p style="color: var(--muted); margin-bottom: 6px;">Your account number is</p>
+                <div class="mono" style="font-size: 2rem; color: var(--pine); font-weight: 600; margin-bottom: 20px;" id="newAccNo"></div>
+                <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 24px;">Keep this number safe &mdash; you'll need it, along with your PIN, to sign in.</p>
+                <a href="index.html" class="btn" style="display:block; text-decoration:none; text-align:center;">Go to sign in</a>
+            </div>
+
+            <form id="registerForm">
+                <div class="field">
+                    <label for="name">Full name</label>
+                    <input type="text" id="name" required placeholder="e.g. Ayesha Khan">
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="phone">Phone number</label>
+                        <input type="text" id="phone" required placeholder="03001234567" pattern="\d{7,15}">
+                    </div>
+                    <div class="field">
+                        <label for="accountType">Account type</label>
+                        <select id="accountType" required>
+                            <option value="Savings">Savings</option>
+                            <option value="Current">Current</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="Street, City">
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="pin">Set a 4-digit PIN</label>
+                        <input type="password" id="pin" required maxlength="4" pattern="\d{4}" placeholder="&bull;&bull;&bull;&bull;">
+                    </div>
+                    <div class="field">
+                        <label for="openingBalance">Opening deposit (min. 500)</label>
+                        <input type="number" id="openingBalance" required min="500" placeholder="500">
+                    </div>
+                </div>
+                <button type="submit" class="btn">Open my account</button>
+            </form>
+
+            <div class="form-footer">
+                Already have an account? <a href="index.html">Sign in</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideAlert("regAlert");
+
+    const payload = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        accountType: document.getElementById("accountType").value,
+        address: document.getElementById("address").value.trim(),
+        pin: document.getElementById("pin").value.trim(),
+        openingBalance: document.getElementById("openingBalance").value
+    };
+
+    try {
+        const data = await apiRequest("POST", "/api/accounts/register", payload);
+        document.getElementById("registerForm").style.display = "none";
+        document.getElementById("successBox").style.display = "block";
+        document.getElementById("newAccNo").textContent = data.accountNo;
+    } catch (err) {
+        showAlert("regAlert", err.message, "error");
+    }
+});
+</script>
+</body>
+</html>

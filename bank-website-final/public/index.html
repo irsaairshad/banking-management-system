@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Trust &mdash; Online Banking</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="brand"><span class="mark">M</span> Meridian Trust</div>
+    <nav>
+        <a href="register.html">Open an account</a>
+        <a href="admin.html">Bank admin</a>
+    </nav>
+</div>
+
+<div class="center-page">
+    <div class="split">
+        <div class="hero-copy">
+            <span class="eyebrow">Ledger No. 001 &middot; Est. 2026</span>
+            <h1>Your balance, kept exactly as you left it.</h1>
+            <p>A straightforward account for straightforward banking: deposits, withdrawals, and transfers, recorded to the minute in your personal ledger.</p>
+            <div class="tag-row">
+                <span class="tag">Instant transfers</span>
+                <span class="tag">Full transaction history</span>
+                <span class="tag">PIN-protected</span>
+            </div>
+        </div>
+
+        <div class="ledger-card narrow">
+            <span class="eyebrow">Account access</span>
+            <h2 style="margin-bottom: 22px;">Sign in</h2>
+
+            <div class="alert" id="loginAlert"></div>
+
+            <form id="loginForm">
+                <div class="field">
+                    <label for="accountNo">Account number</label>
+                    <input type="text" id="accountNo" placeholder="e.g. 384021" required maxlength="10">
+                </div>
+                <div class="field">
+                    <label for="pin">4-digit PIN</label>
+                    <input type="password" id="pin" placeholder="&bull;&bull;&bull;&bull;" required maxlength="4" pattern="\d{4}">
+                </div>
+                <button type="submit" class="btn">Sign in to my account</button>
+            </form>
+
+            <div class="form-footer">
+                New here? <a href="register.html">Open an account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideAlert("loginAlert");
+
+    const accountNo = document.getElementById("accountNo").value.trim();
+    const pin = document.getElementById("pin").value.trim();
+
+    try {
+        await apiRequest("POST", "/api/accounts/login", { accountNo, pin });
+        window.location.href = "dashboard.html";
+    } catch (err) {
+        showAlert("loginAlert", err.message, "error");
+    }
+});
+</script>
+</body>
+</html>
